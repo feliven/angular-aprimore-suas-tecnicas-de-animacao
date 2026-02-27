@@ -2,37 +2,38 @@
   <div class="botao-criar">
     <button (click)="mostrarOuEsconderFormulario()">Criar nova tarefa</button>
   </div>
-  @if (formAberto) {
+  @if (formAberto()) {
   <form class="formulario ff-prompt" [formGroup]="formulario" @shownState>
     <label for="descricao">Descrição da tarefa</label>
     <input
       required
       type="text"
+      id="descricao"
       formControlName="descricao"
       placeholder="Digite a tarefa"
       [ngClass]="campoValidado('descricao')"
     />
-    @if (!validado) {
+    @if (formulario.get('descricao')?.invalid && formulario.get('descricao')?.touched) {
     <app-mensagem mensagemValidacao="Preencha a descrição"> </app-mensagem>
     }
     <label for="prioridade">Prioridade</label>
-    <select required formControlName="prioridade" [ngClass]="campoValidado('prioridade')">
+    <select required id="prioridade" formControlName="prioridade" [ngClass]="campoValidado('prioridade')">
       <option disabled value="">Selecione</option>
       <option value="Alta">Alta</option>
       <option value="Normal">Normal</option>
       <option value="Baixa">Baixa</option>
     </select>
-    @if (!validado) {
+    @if (formulario.get('prioridade')?.invalid && formulario.get('prioridade')?.touched) {
     <app-mensagem mensagemValidacao="Escolha a prioridade"> </app-mensagem>
     }
     <label for="categoria">Categoria</label>
-    <select required formControlName="categoria" [ngClass]="campoValidado('categoria')">
+    <select required id="categoria" formControlName="categoria" [ngClass]="campoValidado('categoria')">
       <option disabled value="">Selecione</option>
       <option value="Casa">Casa</option>
       <option value="Trabalho">Trabalho</option>
       <option value="Estudos">Estudos</option>
     </select>
-    @if (!validado) {
+    @if (formulario.get('categoria')?.invalid && formulario.get('categoria')?.touched) {
     <app-mensagem mensagemValidacao="Escolha a categoria"> </app-mensagem>
     }
     <div class="botoes-form">
@@ -45,7 +46,7 @@
   }
 </section>
 <section class="listagem-tarefas">
-  @if (!formAberto) {
+  @if (!formAberto()) {
   <div class="ilustracao">
     <h2>Suas tarefas</h2>
     <img
@@ -53,9 +54,9 @@
       alt="Ilustração de um ambiente com mesa, computador, quadro e um vaso com planta"
     />
   </div>
-  } @if (listaTarefas.length > 0) {
+  } @if (listaTarefas().length > 0) {
   <div>
-    @for (tarefa of listaTarefas; track tarefa; let i = $index) {
+    @for (tarefa of listaTarefas(); track tarefa.id; let i = $index) {
     <div
       class="lista-tarefas card-{{ tarefa.categoria }}"
       (mouseover)="indexTarefa = i"
@@ -71,7 +72,7 @@
           <button
             [ngClass]="(tarefa.statusFinalizado == true) ? 'icone-checked' : 'icone-unchecked'"
             (click)="finalizarTarefa(tarefa.id);"
-            [@checkButton]="(tarefa.id === id ? 'checked' : 'unchecked')"
+            [@checkButton]="(tarefa.id === id() ? 'checked' : 'unchecked')"
           ></button>
         </p>
       </div>

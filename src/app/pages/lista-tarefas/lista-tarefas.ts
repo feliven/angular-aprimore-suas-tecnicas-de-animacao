@@ -1,6 +1,5 @@
-import { Component, OnInit, inject } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from "@angular/core";
 import { NgClass } from "@angular/common";
-import { Router } from "@angular/router";
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
 // import { filter } from "rxjs";
 
@@ -15,18 +14,17 @@ import { botaoCheckTrigger, highlightedStateTrigger, shownStateTrigger } from ".
   styleUrls: ["./lista-tarefas.css"],
   imports: [Mensagem, ReactiveFormsModule, NgClass],
   animations: [highlightedStateTrigger, shownStateTrigger, botaoCheckTrigger],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListaTarefas implements OnInit {
   private service = inject(TarefaService);
-  private router = inject(Router);
   private formBuilder = inject(FormBuilder);
 
-  listaTarefas: Tarefa[] = [];
-  formAberto: boolean = false;
+  listaTarefas = signal<Tarefa[]>([]);
+  formAberto = signal<boolean>(false);
   categoria: string = "";
-  validado: boolean = false;
   indexTarefa = -1;
-  id: number = 0;
+  id = signal<number>(0);
 
   formulario: FormGroup = this.formBuilder.group({
     id: [0],
@@ -38,13 +36,13 @@ export class ListaTarefas implements OnInit {
 
   ngOnInit(): Tarefa[] {
     this.service.listar(this.categoria).subscribe((listaTarefas) => {
-      this.listaTarefas = listaTarefas;
+      this.listaTarefas.set(listaTarefas);
     });
-    return this.listaTarefas;
+    return this.listaTarefas();
   }
 
   mostrarOuEsconderFormulario() {
-    this.formAberto = !this.formAberto;
+    this.formAberto.set(!this.formAberto());
     this.resetarFormulario();
   }
 
@@ -71,14 +69,14 @@ export class ListaTarefas implements OnInit {
   excluirTarefa(id: number) {
     if (id) {
       this.service.excluir(id).subscribe({
-        complete: () => this.recarregarComponente(),
+        complete: () => this.recarregarListaETerminarAcao(), // Call a unified action to refresh list and detect changes
       });
     }
   }
 
   cancelar() {
     this.resetarFormulario();
-    this.formAberto = false;
+    this.formAberto.set(false);
   }
 
   resetarFormulario() {
@@ -90,30 +88,35 @@ export class ListaTarefas implements OnInit {
     });
   }
 
-  recarregarComponente() {
-    this.router.navigate(["/listaTarefas"]);
+  // Unified method to refresh the list and ensure change detection
+  recarregarListaETerminarAcao() {
+    this.service.listar(this.categoria).subscribe((listaTarefas) => {
+      this.listaTarefas.set(listaTarefas);
+      this.formAberto.set(false); // Ensure form is closed after an action
+    });
   }
 
   atualizarComponente() {
-    this.recarregarComponente();
-    this.resetarFormulario();
+    // This will reload the list, reset the form, close the form and trigger change detection.
+    this.recarregarListaETerminarAcao();
+    this.resetarFormulario(); // Reset form after saving, its validity changes.
   }
 
   carregarParaEditar(id: number) {
     this.service.buscarPorId(id!).subscribe((tarefa) => {
-      this.formulario = this.formBuilder.group({
-        id: [tarefa.id],
-        descricao: [tarefa.descricao],
-        categoria: [tarefa.categoria],
-        statusFinalizado: [tarefa.statusFinalizado],
-        prioridade: [tarefa.prioridade],
+      this.formulario.patchValue({
+        id: tarefa.id,
+        descricao: tarefa.descricao,
+        categoria: tarefa.categoria,
+        statusFinalizado: tarefa.statusFinalizado,
+        prioridade: tarefa.prioridade,
       });
     });
-    this.formAberto = true;
+    this.formAberto.set(true);
   }
 
   finalizarTarefa(id: number) {
-    this.id = id;
+    this.id.set(id);
     this.service.buscarPorId(id!).subscribe((tarefa) => {
       this.service.atualizarStatusTarefa(tarefa).subscribe(() => {
         this.listarAposCheck();
@@ -123,7 +126,7 @@ export class ListaTarefas implements OnInit {
 
   listarAposCheck() {
     this.service.listar(this.categoria).subscribe((listaTarefas) => {
-      this.listaTarefas = listaTarefas;
+      this.listaTarefas.set(listaTarefas);
     });
   }
 
@@ -135,10 +138,8 @@ export class ListaTarefas implements OnInit {
 
   campoValidado(campoAtual: string): string {
     if (this.formulario.get(campoAtual)?.errors && this.formulario.get(campoAtual)?.touched) {
-      this.validado = false;
       return "form-tarefa input-invalido";
     } else {
-      this.validado = true;
       return "form-tarefa";
     }
   }
