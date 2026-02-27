@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Router } from "@angular/router";
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
@@ -17,6 +17,10 @@ import { botaoCheckTrigger, highlightedStateTrigger, shownStateTrigger } from ".
   animations: [highlightedStateTrigger, shownStateTrigger, botaoCheckTrigger],
 })
 export class ListaTarefas implements OnInit {
+  private service = inject(TarefaService);
+  private router = inject(Router);
+  private formBuilder = inject(FormBuilder);
+
   listaTarefas: Tarefa[] = [];
   formAberto: boolean = false;
   categoria: string = "";
@@ -31,8 +35,6 @@ export class ListaTarefas implements OnInit {
     categoria: ["", Validators.required],
     prioridade: ["", Validators.required],
   });
-
-  constructor(private service: TarefaService, private router: Router, private formBuilder: FormBuilder) {}
 
   ngOnInit(): Tarefa[] {
     this.service.listar(this.categoria).subscribe((listaTarefas) => {

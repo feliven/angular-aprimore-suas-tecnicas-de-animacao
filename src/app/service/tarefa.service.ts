@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 
@@ -8,8 +8,9 @@ import { Tarefa } from "../interface/tarefa";
   providedIn: "root",
 })
 export class TarefaService {
+  private http = inject(HttpClient);
+
   private readonly API = "http://localhost:3000/tarefas";
-  constructor(private http: HttpClient) {}
 
   listar(categoria: string): Observable<Tarefa[]> {
     let params = new HttpParams().appendAll({
