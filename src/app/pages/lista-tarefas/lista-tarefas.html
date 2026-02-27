@@ -2,7 +2,8 @@
   <div class="botao-criar">
     <button (click)="mostrarOuEsconderFormulario()">Criar nova tarefa</button>
   </div>
-  <form class="formulario ff-prompt" [formGroup]="formulario" *ngIf="formAberto" @shownState>
+  @if (formAberto) {
+  <form class="formulario ff-prompt" [formGroup]="formulario" @shownState>
     <label for="descricao">Descrição da tarefa</label>
     <input
       required
@@ -11,7 +12,9 @@
       placeholder="Digite a tarefa"
       [ngClass]="campoValidado('descricao')"
     />
-    <app-mensagem *ngIf="!validado" mensagemValidacao="Preencha a descrição"> </app-mensagem>
+    @if (!validado) {
+    <app-mensagem mensagemValidacao="Preencha a descrição"> </app-mensagem>
+    }
     <label for="prioridade">Prioridade</label>
     <select required formControlName="prioridade" [ngClass]="campoValidado('prioridade')">
       <option disabled value="">Selecione</option>
@@ -19,7 +22,9 @@
       <option value="Normal">Normal</option>
       <option value="Baixa">Baixa</option>
     </select>
-    <app-mensagem *ngIf="!validado" mensagemValidacao="Escolha a prioridade"> </app-mensagem>
+    @if (!validado) {
+    <app-mensagem mensagemValidacao="Escolha a prioridade"> </app-mensagem>
+    }
     <label for="categoria">Categoria</label>
     <select required formControlName="categoria" [ngClass]="campoValidado('categoria')">
       <option disabled value="">Selecione</option>
@@ -27,7 +32,9 @@
       <option value="Trabalho">Trabalho</option>
       <option value="Estudos">Estudos</option>
     </select>
-    <app-mensagem *ngIf="!validado" mensagemValidacao="Escolha a categoria"> </app-mensagem>
+    @if (!validado) {
+    <app-mensagem mensagemValidacao="Escolha a categoria"> </app-mensagem>
+    }
     <div class="botoes-form">
       <button (click)="salvarTarefa()" class="botao-form" [ngClass]="habilitarBotao()" [disabled]="!formulario.valid">
         Salvar
@@ -35,19 +42,22 @@
       <button (click)="cancelar()" class="botao-form botao-cancelar">Cancelar</button>
     </div>
   </form>
+  }
 </section>
 <section class="listagem-tarefas">
-  <div class="ilustracao" *ngIf="!formAberto">
+  @if (!formAberto) {
+  <div class="ilustracao">
     <h2>Suas tarefas</h2>
     <img
       src="imagens/ilustracao-Tarefas.png"
       alt="Ilustração de um ambiente com mesa, computador, quadro e um vaso com planta"
     />
   </div>
-  <div *ngIf="listaTarefas.length > 0, else semTarefas">
+  } @if (listaTarefas.length > 0) {
+  <div>
+    @for (tarefa of listaTarefas; track tarefa; let i = $index) {
     <div
       class="lista-tarefas card-{{ tarefa.categoria }}"
-      *ngFor="let tarefa of listaTarefas; let i = index"
       (mouseover)="indexTarefa = i"
       [@highlightedState]="indexTarefa === i ? 'highlighted': 'default'"
     >
@@ -82,8 +92,9 @@
         </div>
       </div>
     </div>
+    }
   </div>
-</section>
-<ng-template #semTarefas>
+  } @else {
   <p class="ng-template ff-prompt">Olá! Ainda não há tarefas por aqui! :)</p>
-</ng-template>
+  }
+</section>
