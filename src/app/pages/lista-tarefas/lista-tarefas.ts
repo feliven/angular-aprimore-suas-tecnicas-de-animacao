@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { NgClass } from "@angular/common";
 import { Router } from "@angular/router";
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
 // import { filter } from "rxjs";
@@ -13,7 +13,7 @@ import { botaoCheckTrigger, highlightedStateTrigger, shownStateTrigger } from ".
   selector: "app-lista-tarefas",
   templateUrl: "./lista-tarefas.html",
   styleUrls: ["./lista-tarefas.css"],
-  imports: [Mensagem, CommonModule, ReactiveFormsModule],
+  imports: [Mensagem, ReactiveFormsModule, NgClass],
   animations: [highlightedStateTrigger, shownStateTrigger, botaoCheckTrigger],
 })
 export class ListaTarefas implements OnInit {
