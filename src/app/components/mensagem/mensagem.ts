@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 
 @Component({
   selector: "app-mensagem",
@@ -6,5 +6,5 @@ import { Component, Input } from "@angular/core";
   styleUrls: ["./mensagem.css"],
 })
 export class Mensagem {
-  @Input() mensagemValidacao: string = "";
+  readonly mensagemValidacao = input<string>("");
 }
