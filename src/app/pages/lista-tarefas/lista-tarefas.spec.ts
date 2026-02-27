@@ -8,8 +8,8 @@ describe("ListaTarefasComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ListaTarefas],
-    }).compileComponents();
+    imports: [ListaTarefas],
+}).compileComponents();
 
     fixture = TestBed.createComponent(ListaTarefas);
     component = fixture.componentInstance;
