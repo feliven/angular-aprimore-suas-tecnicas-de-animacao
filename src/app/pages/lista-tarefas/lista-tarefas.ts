@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from "@angular/core";
 import { NgClass } from "@angular/common";
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 // import { filter } from "rxjs";
 
 import { TarefaService } from "../../service/tarefa.service";
@@ -12,7 +12,7 @@ import { botaoCheckTrigger, highlightedStateTrigger, shownStateTrigger } from ".
   selector: "app-lista-tarefas",
   templateUrl: "./lista-tarefas.html",
   styleUrls: ["./lista-tarefas.css"],
-  imports: [Mensagem, ReactiveFormsModule, NgClass],
+  imports: [NgClass, ReactiveFormsModule, Mensagem],
   animations: [highlightedStateTrigger, shownStateTrigger, botaoCheckTrigger],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -21,6 +21,7 @@ export class ListaTarefas implements OnInit {
   private formBuilder = inject(FormBuilder);
 
   listaTarefas = signal<Tarefa[]>([]);
+  tarefasFiltradas = signal<Tarefa[]>([]);
   formAberto = signal<boolean>(false);
   categoria: string = "";
   indexTarefa = -1;
@@ -34,11 +35,31 @@ export class ListaTarefas implements OnInit {
     prioridade: ["", Validators.required],
   });
 
+  campoBusca = new FormControl("", { nonNullable: true });
+
   ngOnInit(): Tarefa[] {
-    this.service.listar(this.categoria).subscribe((listaTarefas) => {
-      this.listaTarefas.set(listaTarefas);
+    this.service.listar(this.categoria).subscribe((arrayTarefas) => {
+      this.listaTarefas.set(arrayTarefas);
+      this.tarefasFiltradas.set(this.listaTarefas());
     });
-    return this.listaTarefas();
+    return this.tarefasFiltradas();
+  }
+
+  filtrarTarefas() {
+    const filtro: string = this.campoBusca.value;
+
+    const filtroTratado = filtro.trim().toLowerCase();
+
+    console.log(`filtroTratado: '${filtroTratado}'`);
+
+    if (filtroTratado) {
+      const tarefasComFiltro = this.listaTarefas().filter((tarefa) => {
+        return tarefa.descricao.toLowerCase().includes(filtroTratado);
+      });
+      this.tarefasFiltradas.set(tarefasComFiltro);
+    } else {
+      this.tarefasFiltradas.set(this.listaTarefas());
+    }
   }
 
   mostrarOuEsconderFormulario() {
@@ -90,8 +111,8 @@ export class ListaTarefas implements OnInit {
 
   // Unified method to refresh the list and ensure change detection
   recarregarListaETerminarAcao() {
-    this.service.listar(this.categoria).subscribe((listaTarefas) => {
-      this.listaTarefas.set(listaTarefas);
+    this.service.listar(this.categoria).subscribe((arrayTarefas) => {
+      this.listaTarefas.set(arrayTarefas);
       this.formAberto.set(false); // Ensure form is closed after an action
     });
   }
@@ -125,8 +146,8 @@ export class ListaTarefas implements OnInit {
   }
 
   listarAposCheck() {
-    this.service.listar(this.categoria).subscribe((listaTarefas) => {
-      this.listaTarefas.set(listaTarefas);
+    this.service.listar(this.categoria).subscribe((arrayTarefas) => {
+      this.tarefasFiltradas.set(arrayTarefas);
     });
   }
 

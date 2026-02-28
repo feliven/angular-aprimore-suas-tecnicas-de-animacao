@@ -54,9 +54,19 @@
       alt="Ilustração de um ambiente com mesa, computador, quadro e um vaso com planta"
     />
   </div>
-  } @if (listaTarefas().length > 0) {
+  <div class="busca">
+    <p class="ff-prompt">Procurando o que fazer?</p>
+    <input
+      type="search"
+      id="campo-busca"
+      placeholder="Buscar..."
+      [formControl]="campoBusca"
+      (keyup)="filtrarTarefas()"
+    />
+  </div>
+  } @if (tarefasFiltradas().length > 0) {
   <div>
-    @for (tarefa of listaTarefas(); track tarefa.id; let i = $index) {
+    @for (tarefa of tarefasFiltradas(); track tarefa.id; let i = $index) {
     <div
       class="lista-tarefas card-{{ tarefa.categoria }}"
       (mouseover)="indexTarefa = i"
