@@ -64,13 +64,13 @@ export const filterTrigger = trigger("filterAnimation", [
 
 export const formButtonTrigger = trigger("formButton", [
   transition("invalid => valid", [
-    query("button", [
+    query(".botao-salvar", [
       group([animate(300, style({ backgroundColor: "#63B77C" })), animate(100, style({ transform: "scale(1.8)" }))]),
       animate(300, style({ transform: "scale(1)" })),
     ]),
   ]),
   transition("valid => invalid", [
-    query("button", [
+    query(".botao-salvar", [
       group([animate(200, style({ backgroundColor: "grey" })), animate(100, style({ transform: "scale(1.2)" }))]),
       animate(150, style({ transform: "scale(1)" })),
     ]),
