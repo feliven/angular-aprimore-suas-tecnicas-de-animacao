@@ -1,4 +1,4 @@
-import { animate, group, keyframes, state, style, transition, trigger } from "@angular/animations";
+import { animate, group, keyframes, query, state, style, transition, trigger } from "@angular/animations";
 import { transform } from "happy-dom/lib/PropertySymbol";
 
 export const highlightedStateTrigger = trigger("highlightedState", [
@@ -64,15 +64,16 @@ export const filterTrigger = trigger("filterAnimation", [
 
 export const formButtonTrigger = trigger("formButton", [
   transition("invalid => valid", [
-    group([animate(300, style({ backgroundColor: "#63B77C" })), animate(100, style({ transform: "scale(1.8)" }))]),
-
-    animate(300, style({ transform: "scale(1)" })),
+    query("button", [
+      group([animate(300, style({ backgroundColor: "#63B77C" })), animate(100, style({ transform: "scale(1.8)" }))]),
+      animate(300, style({ transform: "scale(1)" })),
+    ]),
   ]),
-
   transition("valid => invalid", [
-    group([animate(200, style({ backgroundColor: "grey" })), animate(100, style({ transform: "scale(1.2)" }))]),
-
-    animate(150, style({ transform: "scale(1)" })),
+    query("button", [
+      group([animate(200, style({ backgroundColor: "grey" })), animate(100, style({ transform: "scale(1.2)" }))]),
+      animate(150, style({ transform: "scale(1)" })),
+    ]),
   ]),
 ]);
 

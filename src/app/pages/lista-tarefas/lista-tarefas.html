@@ -1,4 +1,4 @@
-<section class="criar-tarefa">
+<section class="criar-tarefa" [@formButton]="formulario.valid ? 'valid':'invalid'">
   <div class="botao-criar">
     <button (click)="mostrarOuEsconderFormulario()">Criar nova tarefa</button>
   </div>
@@ -37,13 +37,7 @@
     <app-mensagem mensagemValidacao="Escolha a categoria"> </app-mensagem>
     }
     <div class="botoes-form">
-      <button
-        [@formButton]="formulario.valid ? 'valid':'invalid'"
-        (click)="salvarTarefa()"
-        class="botao-form"
-        [ngClass]="habilitarBotao()"
-        [disabled]="!formulario.valid"
-      >
+      <button (click)="salvarTarefa()" class="botao-form" [ngClass]="habilitarBotao()" [disabled]="!formulario.valid">
         Salvar
       </button>
       <button (click)="cancelar()" class="botao-form botao-cancelar">Cancelar</button>
