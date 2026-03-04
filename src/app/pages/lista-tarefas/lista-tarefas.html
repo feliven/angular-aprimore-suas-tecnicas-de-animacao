@@ -68,6 +68,7 @@
   <div>
     @for (tarefa of tarefasFiltradas(); track tarefa.id; let i = $index) {
     <div
+      @filterAnimation
       class="lista-tarefas card-{{ tarefa.categoria }}"
       (mouseover)="indexTarefa = i"
       [@highlightedState]="indexTarefa === i ? 'highlighted': 'default'"

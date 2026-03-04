@@ -5,21 +5,21 @@ export const highlightedStateTrigger = trigger("highlightedState", [
     "default",
     style({
       border: "2px solid #B2B6FF",
-    })
+    }),
   ),
   state(
     "highlighted",
     style({
       border: "4px solid #B2B6FF",
       filter: "brightness(104%)",
-    })
+    }),
   ),
   transition("default => highlighted", [
     animate(
       "250ms cubic-bezier(.63,.14,.6,1.35)",
       style({
         transform: "scale(1.01)",
-      })
+      }),
     ),
     // style({
     //   transform: "scale(1.02)",
@@ -42,4 +42,20 @@ export const botaoCheckTrigger = trigger("checkButton", [
       transform: "scale(0.4)",
     }),
   ]),
+]);
+
+// código omitido
+
+export const filterTrigger = trigger("filterAnimation", [
+  transition(":enter", [
+    style({ opacity: 0, width: 0 }),
+    animate(
+      "400ms ease-out",
+      style({
+        opacity: 1,
+        width: "*",
+      }),
+    ),
+  ]),
+  transition(":leave", [animate("200ms cubic-bezier(.13,.9,.8,.1)", style({ opacity: 0, width: 0 }))]),
 ]);
