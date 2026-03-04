@@ -85,6 +85,27 @@ input[type="search"]::-webkit-search-decoration,
 
 .listagem-tarefas {
   min-height: 80vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Container for the task-list area so the no-tasks message can overlay without affecting flow */
+.tasks-area {
+  position: relative;
+  min-height: 200px;
+  overflow: hidden;
+}
+
+.no-tasks {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 0;
+  will-change: transform;
 }
 
 .listagem-tarefas h2 {
@@ -377,8 +398,7 @@ input:focus {
 
 .ng-template {
   text-align: center;
-  margin-top: 48px;
-  margin-top: 96px;
+  margin-top: 0;
 }
 
 input::placeholder {

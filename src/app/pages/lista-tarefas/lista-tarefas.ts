@@ -9,8 +9,10 @@ import { Mensagem } from "../../components/mensagem/mensagem";
 import {
   botaoCheckTrigger,
   filterTrigger,
+  flyInOutTrigger,
   formButtonTrigger,
   highlightedStateTrigger,
+  noTasksTrigger,
   shownStateTrigger,
 } from "../../animations";
 
@@ -19,7 +21,15 @@ import {
   templateUrl: "./lista-tarefas.html",
   styleUrls: ["./lista-tarefas.css"],
   imports: [NgClass, ReactiveFormsModule, Mensagem],
-  animations: [highlightedStateTrigger, shownStateTrigger, botaoCheckTrigger, filterTrigger, formButtonTrigger],
+  animations: [
+    highlightedStateTrigger,
+    shownStateTrigger,
+    botaoCheckTrigger,
+    filterTrigger,
+    formButtonTrigger,
+    noTasksTrigger,
+    flyInOutTrigger,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListaTarefas implements OnInit {
