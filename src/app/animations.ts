@@ -50,13 +50,13 @@ export const filterTrigger = trigger("filterAnimation", [
   transition(":enter", [
     style({ opacity: 0, width: 0 }),
     animate(
-      "2000ms ease-out",
+      "900ms cubic-bezier(0.25, 1, 0.5, 1)",
       keyframes([
-        style({ offset: 0, opacity: 0, width: 0 }),
-        style({ offset: 0.3, opacity: 0.5, width: "*", backgroundColor: "red" }),
-        style({ offset: 1, opacity: 1, width: "*", backgroundColor: "yellow" }),
+        style({ offset: 0, opacity: 0, width: 0, backgroundColor: "yellow" }),
+        style({ offset: 0.9, opacity: 0.5, width: "*", backgroundColor: "yellow" }),
+        style({ offset: 1, opacity: 1, width: "*", backgroundColor: "*" }),
       ]),
     ),
   ]),
-  transition(":leave", [animate("500ms cubic-bezier(.13,.9,.8,.1)", style({ opacity: 0, width: 0 }))]),
+  transition(":leave", [animate("500ms cubic-bezier(0.16, 1, 0.3, 1)", style({ opacity: 0, width: 0 }))]),
 ]);
