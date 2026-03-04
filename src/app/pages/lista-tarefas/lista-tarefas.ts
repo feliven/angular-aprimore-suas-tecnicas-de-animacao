@@ -38,6 +38,7 @@ export class ListaTarefas implements OnInit {
 
   listaTarefas = signal<Tarefa[]>([]);
   tarefasFiltradas = signal<Tarefa[]>([]);
+  dadosForamCarregados = signal<boolean>(false);
   formAberto = signal<boolean>(false);
   categoria: string = "";
   indexTarefa = -1;
@@ -57,6 +58,7 @@ export class ListaTarefas implements OnInit {
     this.service.listar(this.categoria).subscribe((arrayTarefas) => {
       this.listaTarefas.set(arrayTarefas);
       this.tarefasFiltradas.set(this.listaTarefas());
+      this.dadosForamCarregados.set(true);
     });
     return this.tarefasFiltradas();
   }
@@ -130,6 +132,7 @@ export class ListaTarefas implements OnInit {
     this.service.listar(this.categoria).subscribe((arrayTarefas) => {
       this.listaTarefas.set(arrayTarefas);
       this.formAberto.set(false); // Ensure form is closed after an action
+      this.dadosForamCarregados.set(true);
     });
   }
 
