@@ -6,14 +6,20 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { TarefaService } from "../../service/tarefa.service";
 import { Tarefa } from "../../interface/tarefa";
 import { Mensagem } from "../../components/mensagem/mensagem";
-import { botaoCheckTrigger, filterTrigger, highlightedStateTrigger, shownStateTrigger } from "../../animations";
+import {
+  botaoCheckTrigger,
+  filterTrigger,
+  formButtonTrigger,
+  highlightedStateTrigger,
+  shownStateTrigger,
+} from "../../animations";
 
 @Component({
   selector: "app-lista-tarefas",
   templateUrl: "./lista-tarefas.html",
   styleUrls: ["./lista-tarefas.css"],
   imports: [NgClass, ReactiveFormsModule, Mensagem],
-  animations: [highlightedStateTrigger, shownStateTrigger, botaoCheckTrigger, filterTrigger],
+  animations: [highlightedStateTrigger, shownStateTrigger, botaoCheckTrigger, filterTrigger, formButtonTrigger],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListaTarefas implements OnInit {

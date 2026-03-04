@@ -1,4 +1,5 @@
 import { animate, keyframes, state, style, transition, trigger } from "@angular/animations";
+import { transform } from "happy-dom/lib/PropertySymbol";
 
 export const highlightedStateTrigger = trigger("highlightedState", [
   state(
@@ -59,4 +60,27 @@ export const filterTrigger = trigger("filterAnimation", [
     ),
   ]),
   transition(":leave", [animate("500ms cubic-bezier(0.16, 1, 0.3, 1)", style({ opacity: 0, width: 0 }))]),
+]);
+
+export const formButtonTrigger = trigger("formButton", [
+  transition("invalid => valid", [
+    animate(
+      300,
+      style({
+        backgroundColor: "#63B77C",
+      }),
+    ),
+    animate(
+      100,
+      style({
+        transform: "scale(1.8)",
+      }),
+    ),
+    animate(
+      300,
+      style({
+        transform: "scale(1)",
+      }),
+    ),
+  ]),
 ]);

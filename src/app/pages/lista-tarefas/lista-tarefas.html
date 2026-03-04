@@ -37,7 +37,13 @@
     <app-mensagem mensagemValidacao="Escolha a categoria"> </app-mensagem>
     }
     <div class="botoes-form">
-      <button (click)="salvarTarefa()" class="botao-form" [ngClass]="habilitarBotao()" [disabled]="!formulario.valid">
+      <button
+        [@formButton]="formulario.valid ? 'valid':'invalid'"
+        (click)="salvarTarefa()"
+        class="botao-form"
+        [ngClass]="habilitarBotao()"
+        [disabled]="!formulario.valid"
+      >
         Salvar
       </button>
       <button (click)="cancelar()" class="botao-form botao-cancelar">Cancelar</button>
