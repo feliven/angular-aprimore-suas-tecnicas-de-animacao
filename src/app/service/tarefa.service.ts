@@ -33,18 +33,54 @@ export class TarefaService {
     });
   }
 
-  criar(tarefa: Tarefa): Observable<Tarefa> {
-    return this.http.post<Tarefa>(this.API, tarefa);
+  criar(tarefa: Tarefa): void {
+    this.http.post<Tarefa>(this.API, tarefa).subscribe((tarefaCriada) => {
+      const tarefaParaAdicionar = tarefaCriada;
+      this.tarefas$.subscribe((listaTarefas) => {
+        listaTarefas.push(tarefaParaAdicionar);
+        console.log("listaTarefas:", listaTarefas);
+      });
+    });
   }
 
-  editar(tarefa: Tarefa): Observable<Tarefa> {
-    const url = `${this.API}/${tarefa.id}`;
-    return this.http.put<Tarefa>(url, tarefa);
+  editar(tarefaParaAtualizar: Tarefa): void {
+    const url = `${this.API}/${tarefaParaAtualizar.id}`;
+    this.http.put<Tarefa>(url, tarefaParaAtualizar).subscribe((tarefaAtualizada) => {
+      const tarefaParaSalvar = tarefaAtualizada;
+
+      this.tarefas$.subscribe((listaTarefas) => {
+        console.log("listaTarefas.length - antes:", listaTarefas.length);
+        const index = listaTarefas.indexOf(tarefaParaAtualizar);
+
+        if (index > -1) {
+          listaTarefas.splice(index, 1, tarefaParaSalvar);
+        }
+        console.log("listaTarefas.length - depois:", listaTarefas.length);
+      });
+    });
   }
 
-  excluir(id: number): Observable<Tarefa> {
+  excluir(id: number): void {
     const url = `${this.API}/${id}`;
-    return this.http.delete<Tarefa>(url);
+
+    this.http.delete<Tarefa>(url).subscribe(() => {
+      this.tarefas$.subscribe((listaTarefas) => {
+        console.log("listaTarefas.length - antes:", listaTarefas.length);
+
+        const tarefaRemovida = listaTarefas.find((tarefa) => tarefa.id === id);
+
+        console.log("tarefaRemovida:", tarefaRemovida);
+
+        if (!tarefaRemovida) throw new Error("Tarefa removida não foi encontrada");
+
+        const index = listaTarefas.indexOf(tarefaRemovida);
+        if (index > -1) {
+          listaTarefas.splice(index, 1);
+        }
+
+        console.log("listaTarefas.length - depois:", listaTarefas.length);
+      });
+    });
   }
 
   buscarPorId(id: number): Observable<Tarefa> {
@@ -52,8 +88,8 @@ export class TarefaService {
     return this.http.get<Tarefa>(url);
   }
 
-  atualizarStatusTarefa(tarefa: Tarefa): Observable<Tarefa> {
+  atualizarStatusTarefa(tarefa: Tarefa): void {
     tarefa.statusFinalizado = !tarefa.statusFinalizado;
-    return this.editar(tarefa);
+    this.editar(tarefa);
   }
 }
