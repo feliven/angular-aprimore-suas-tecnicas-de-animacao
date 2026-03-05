@@ -62,11 +62,19 @@ export class ListaTarefas implements OnInit {
   }
 
   ngOnInit(): void {
+    this.service.listar();
+
+    this.service.tarefas$.subscribe((arrayTarefas) => {
+      console.log("this.listaTarefas - 1:", this.listaTarefas());
       this.listaTarefas.set(arrayTarefas);
+
+      console.log("this.listaTarefas - 2:", this.listaTarefas());
+
       this.tarefasFiltradas.set(this.listaTarefas());
+      console.log("this.tarefasFiltradas:", this.tarefasFiltradas());
+
       this.dadosForamCarregados.set(true);
     });
-    return this.tarefasFiltradas();
   }
 
   filtrarTarefas() {
@@ -100,20 +108,35 @@ export class ListaTarefas implements OnInit {
   }
 
   editarTarefa() {
-    this.service.editar(this.formulario.value).subscribe({
+    console.log("this.formulario.value:", this.formulario.value);
+
+    this.service.editar(this.formulario.value);
+
+    this.service.tarefas$.subscribe({
       complete: () => this.atualizarComponente(),
     });
   }
 
   criarTarefa() {
-    this.service.criar(this.formulario.value).subscribe({
+    this.service.criar(this.formulario.value);
+
+    // this.service.listar();
+
+    this.service.tarefas$.subscribe({
+      next: (arrayTarefas) => {
+        this.listaTarefas.set(arrayTarefas);
+        console.log("this.listaTarefas com nova tarefa:", this.listaTarefas());
+      },
+
       complete: () => this.atualizarComponente(),
     });
   }
 
   excluirTarefa(id: number) {
     if (id) {
-      this.service.excluir(id).subscribe({
+      this.service.excluir(id);
+
+      this.service.tarefas$.subscribe({
         complete: () => this.recarregarListaETerminarAcao(), // Call a unified action to refresh list and detect changes
       });
     }
@@ -124,6 +147,29 @@ export class ListaTarefas implements OnInit {
     this.formAberto.set(false);
   }
 
+  triggerShakeAnimation(controlName: string): boolean {
+    return (this.formulario.get(controlName)?.touched && this.formulario.get(controlName)?.invalid) ?? false;
+  }
+
+  atualizarComponente() {
+    // This will reload the list, reset the form, close the form and trigger change detection.
+    this.recarregarListaETerminarAcao();
+    this.resetarFormulario(); // Reset form after saving, its validity changes.
+  }
+
+  // Unified method to refresh the list and ensure change detection
+  recarregarListaETerminarAcao() {
+    this.service.listar();
+
+    console.log("recarregarListaETerminarAcao() chamado");
+
+    this.service.tarefas$.subscribe((arrayTarefas) => {
+      this.listaTarefas.set(arrayTarefas);
+      this.formAberto.set(false); // Ensure form is closed after an action
+      this.dadosForamCarregados.set(true);
+    });
+  }
+
   resetarFormulario() {
     this.formulario.reset({
       descricao: "",
@@ -131,25 +177,6 @@ export class ListaTarefas implements OnInit {
       categoria: "",
       prioridade: "",
     });
-  }
-
-  triggerShakeAnimation(controlName: string): boolean {
-    return (this.formulario.get(controlName)?.touched && this.formulario.get(controlName)?.invalid) ?? false;
-  }
-
-  // Unified method to refresh the list and ensure change detection
-  recarregarListaETerminarAcao() {
-    this.service.listar(this.categoria).subscribe((arrayTarefas) => {
-      this.listaTarefas.set(arrayTarefas);
-      this.formAberto.set(false); // Ensure form is closed after an action
-      this.dadosForamCarregados.set(true);
-    });
-  }
-
-  atualizarComponente() {
-    // This will reload the list, reset the form, close the form and trigger change detection.
-    this.recarregarListaETerminarAcao();
-    this.resetarFormulario(); // Reset form after saving, its validity changes.
   }
 
   carregarParaEditar(id: number) {
@@ -162,20 +189,22 @@ export class ListaTarefas implements OnInit {
         prioridade: tarefa.prioridade,
       });
     });
+
     this.formAberto.set(true);
   }
 
   finalizarTarefa(id: number) {
     this.id.set(id);
     this.service.buscarPorId(id!).subscribe((tarefa) => {
-      this.service.atualizarStatusTarefa(tarefa).subscribe(() => {
-        this.listarAposCheck();
-      });
+      this.service.atualizarStatusTarefa(tarefa);
+      this.listarAposCheck();
     });
   }
 
   listarAposCheck() {
-    this.service.listar(this.categoria).subscribe((arrayTarefas) => {
+    this.service.listar();
+
+    this.service.tarefas$.subscribe((arrayTarefas) => {
       this.tarefasFiltradas.set(arrayTarefas);
     });
   }
