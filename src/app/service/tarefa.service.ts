@@ -36,21 +36,22 @@ export class TarefaService {
   criar(tarefa: Tarefa): void {
     this.http.post<Tarefa>(this.API, tarefa).subscribe((tarefaCriada) => {
       const listaTarefas = this.tarefasSubject.getValue(); // no nested subscribe
-      this.tarefasSubject.next([...listaTarefas, tarefaCriada]);
+      listaTarefas.unshift(tarefaCriada);
+      this.tarefasSubject.next(listaTarefas);
     });
   }
 
   editar(tarefaParaAtualizar: Tarefa): void {
     const url = `${this.API}/${tarefaParaAtualizar.id}`;
+
     this.http.put<Tarefa>(url, tarefaParaAtualizar).subscribe((tarefaAtualizada) => {
       const listaTarefas = this.tarefasSubject.getValue();
-
-      console.log("tarefaParaAtualizar:", tarefaParaAtualizar);
-
-      const index = listaTarefas.indexOf(tarefaParaAtualizar);
+      const index = listaTarefas.findIndex((tarefa) => tarefa.id === tarefaAtualizada.id);
 
       if (index > -1) {
-        listaTarefas.splice(index, 1, tarefaAtualizada);
+        // listaTarefas.splice(index, 1, tarefaAtualizada);
+        listaTarefas[index] = tarefaAtualizada;
+        this.tarefasSubject.next(listaTarefas);
       }
       console.log("tarefaAtualizada:", tarefaAtualizada);
     });
@@ -63,14 +64,13 @@ export class TarefaService {
       const listaTarefas = this.tarefasSubject.getValue();
       console.log("listaTarefas.length - antes:", listaTarefas.length);
 
-      const tarefaRemovida = listaTarefas.find((tarefa) => tarefa.id === id);
-      console.log("tarefaRemovida:", tarefaRemovida);
+      const index = listaTarefas.findIndex((tarefa) => tarefa.id === id);
 
-      if (!tarefaRemovida) throw new Error("Tarefa removida não foi encontrada");
+      // if (!tarefaRemovida) throw new Error("Tarefa removida não foi encontrada");
 
-      const index = listaTarefas.indexOf(tarefaRemovida);
       if (index > -1) {
         listaTarefas.splice(index, 1);
+        this.tarefasSubject.next(listaTarefas);
       }
 
       console.log("listaTarefas.length - depois:", listaTarefas.length);
