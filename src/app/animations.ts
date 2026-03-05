@@ -77,6 +77,14 @@ export const formButtonTrigger = trigger("formButton", [
   ]),
 ]);
 
+export const shakeTrigger = trigger("shakeAnimation", [
+  transition("* => *", [
+    query("input.ng-invalid:focus, select.ng-invalid:focus", [animate("0.5s", style({ border: "4px solid red" }))], {
+      optional: true,
+    }),
+  ]),
+]);
+
 export const noTasksTrigger = trigger("noTasks", [
   transition(":enter", [
     animate(500, keyframes([style({ transform: "translateX(-100%)" }), style({ transform: "translateX(0)" })])),

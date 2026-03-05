@@ -13,6 +13,7 @@ import {
   formButtonTrigger,
   highlightedStateTrigger,
   noTasksTrigger,
+  shakeTrigger,
   shownStateTrigger,
 } from "../../animations";
 
@@ -29,6 +30,7 @@ import {
     formButtonTrigger,
     noTasksTrigger,
     flyInOutTrigger,
+    shakeTrigger,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

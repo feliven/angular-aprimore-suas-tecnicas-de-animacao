@@ -3,7 +3,13 @@
     <button (click)="mostrarOuEsconderFormulario()">Criar nova tarefa</button>
   </div>
   @if (formAberto()) {
-  <form class="formulario ff-prompt" [formGroup]="formulario" @shownState>
+  <form
+    class="formulario ff-prompt"
+    [formGroup]="formulario"
+    @shownState
+    [@formButton]="formulario.valid ? 'valid':'invalid'"
+    [@shakeAnimation]="formulario.value"
+  >
     <label for="descricao">Descrição da tarefa</label>
     <input
       required
@@ -18,7 +24,7 @@
     }
     <label for="prioridade">Prioridade</label>
     <select required id="prioridade" formControlName="prioridade" [ngClass]="campoValidado('prioridade')">
-      <option disabled value="">Selecione</option>
+      <option value="">Selecione</option>
       <option value="Alta">Alta</option>
       <option value="Normal">Normal</option>
       <option value="Baixa">Baixa</option>
@@ -28,7 +34,7 @@
     }
     <label for="categoria">Categoria</label>
     <select required id="categoria" formControlName="categoria" [ngClass]="campoValidado('categoria')">
-      <option disabled value="">Selecione</option>
+      <option value="">Selecione</option>
       <option value="Casa">Casa</option>
       <option value="Trabalho">Trabalho</option>
       <option value="Estudos">Estudos</option>
@@ -36,7 +42,7 @@
     @if (formulario.get('categoria')?.invalid && formulario.get('categoria')?.touched) {
     <app-mensagem mensagemValidacao="Escolha a categoria"> </app-mensagem>
     }
-    <div class="botoes-form" [@formButton]="formulario.valid ? 'valid':'invalid'">
+    <div class="botoes-form">
       <button
         (click)="salvarTarefa()"
         class="botao-form botao-salvar"
