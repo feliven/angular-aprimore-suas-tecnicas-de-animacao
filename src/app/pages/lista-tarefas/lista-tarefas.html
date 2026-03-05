@@ -8,7 +8,6 @@
     [formGroup]="formulario"
     @shownState
     [@formButton]="formulario.valid ? 'valid':'invalid'"
-    [@shakeAnimation]="formulario.value"
   >
     <label for="descricao">Descrição da tarefa</label>
     <input
@@ -18,6 +17,7 @@
       formControlName="descricao"
       placeholder="Digite a tarefa"
       [ngClass]="campoValidado('descricao')"
+      [@shakeAnimation]="formulario.get('descricao')?.touched && formulario.get('descricao')?.invalid"
     />
     @if (formulario.get('descricao')?.invalid && formulario.get('descricao')?.touched) {
     <app-mensagem mensagemValidacao="Preencha a descrição"> </app-mensagem>
