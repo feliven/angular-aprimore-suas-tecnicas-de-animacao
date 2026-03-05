@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit, effect, inject, signal } from "@angular/core";
 import { NgClass } from "@angular/common";
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 // import { filter } from "rxjs";
@@ -42,8 +42,7 @@ export class ListaTarefas implements OnInit {
   tarefasFiltradas = signal<Tarefa[]>([]);
   dadosForamCarregados = signal<boolean>(false);
   formAberto = signal<boolean>(false);
-  categoria: string = "";
-  indexTarefa = -1;
+  indexTarefa = signal<number>(-1);
   id = signal<number>(0);
 
   formulario: FormGroup = this.formBuilder.group({
@@ -56,8 +55,13 @@ export class ListaTarefas implements OnInit {
 
   campoBusca = new FormControl("", { nonNullable: true });
 
-  ngOnInit(): Tarefa[] {
-    this.service.listar(this.categoria).subscribe((arrayTarefas) => {
+  constructor() {
+    effect(() => {
+      console.log("indexTarefa():", this.indexTarefa());
+    });
+  }
+
+  ngOnInit(): void {
       this.listaTarefas.set(arrayTarefas);
       this.tarefasFiltradas.set(this.listaTarefas());
       this.dadosForamCarregados.set(true);
