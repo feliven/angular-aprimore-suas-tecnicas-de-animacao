@@ -1,6 +1,6 @@
 import { Injectable, inject, signal } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, tap, withLatestFrom } from "rxjs";
 
 import { Tarefa } from "../interface/tarefa";
 
@@ -35,28 +35,24 @@ export class TarefaService {
 
   criar(tarefa: Tarefa): void {
     this.http.post<Tarefa>(this.API, tarefa).subscribe((tarefaCriada) => {
-      const tarefaParaAdicionar = tarefaCriada;
-      this.tarefas$.subscribe((listaTarefas) => {
-        listaTarefas.push(tarefaParaAdicionar);
-        console.log("listaTarefas:", listaTarefas);
-      });
+      const listaTarefas = this.tarefasSubject.getValue(); // no nested subscribe
+      this.tarefasSubject.next([...listaTarefas, tarefaCriada]);
     });
   }
 
   editar(tarefaParaAtualizar: Tarefa): void {
     const url = `${this.API}/${tarefaParaAtualizar.id}`;
     this.http.put<Tarefa>(url, tarefaParaAtualizar).subscribe((tarefaAtualizada) => {
-      const tarefaParaSalvar = tarefaAtualizada;
+      const listaTarefas = this.tarefasSubject.getValue();
 
-      this.tarefas$.subscribe((listaTarefas) => {
-        console.log("listaTarefas.length - antes:", listaTarefas.length);
-        const index = listaTarefas.indexOf(tarefaParaAtualizar);
+      console.log("tarefaParaAtualizar:", tarefaParaAtualizar);
 
-        if (index > -1) {
-          listaTarefas.splice(index, 1, tarefaParaSalvar);
-        }
-        console.log("listaTarefas.length - depois:", listaTarefas.length);
-      });
+      const index = listaTarefas.indexOf(tarefaParaAtualizar);
+
+      if (index > -1) {
+        listaTarefas.splice(index, 1, tarefaAtualizada);
+      }
+      console.log("tarefaAtualizada:", tarefaAtualizada);
     });
   }
 
@@ -64,22 +60,20 @@ export class TarefaService {
     const url = `${this.API}/${id}`;
 
     this.http.delete<Tarefa>(url).subscribe(() => {
-      this.tarefas$.subscribe((listaTarefas) => {
-        console.log("listaTarefas.length - antes:", listaTarefas.length);
+      const listaTarefas = this.tarefasSubject.getValue();
+      console.log("listaTarefas.length - antes:", listaTarefas.length);
 
-        const tarefaRemovida = listaTarefas.find((tarefa) => tarefa.id === id);
+      const tarefaRemovida = listaTarefas.find((tarefa) => tarefa.id === id);
+      console.log("tarefaRemovida:", tarefaRemovida);
 
-        console.log("tarefaRemovida:", tarefaRemovida);
+      if (!tarefaRemovida) throw new Error("Tarefa removida não foi encontrada");
 
-        if (!tarefaRemovida) throw new Error("Tarefa removida não foi encontrada");
+      const index = listaTarefas.indexOf(tarefaRemovida);
+      if (index > -1) {
+        listaTarefas.splice(index, 1);
+      }
 
-        const index = listaTarefas.indexOf(tarefaRemovida);
-        if (index > -1) {
-          listaTarefas.splice(index, 1);
-        }
-
-        console.log("listaTarefas.length - depois:", listaTarefas.length);
-      });
+      console.log("listaTarefas.length - depois:", listaTarefas.length);
     });
   }
 
