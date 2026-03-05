@@ -129,6 +129,10 @@ export class ListaTarefas implements OnInit {
     });
   }
 
+  triggerShakeAnimation(controlName: string): boolean {
+    return (this.formulario.get(controlName)?.touched && this.formulario.get(controlName)?.invalid) ?? false;
+  }
+
   // Unified method to refresh the list and ensure change detection
   recarregarListaETerminarAcao() {
     this.service.listar(this.categoria).subscribe((arrayTarefas) => {
