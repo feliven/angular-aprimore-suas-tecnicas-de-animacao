@@ -46,6 +46,7 @@ export class ListaTarefas implements OnInit {
   indexTarefa = signal<number>(-1);
   id = signal<number>(0);
   tarefasSubscription = signal<Subscription>(new Subscription());
+  estadoBotao = signal<string>("unchecked");
 
   formulario: FormGroup = this.formBuilder.group({
     id: [0],
@@ -187,6 +188,12 @@ export class ListaTarefas implements OnInit {
   finalizarTarefa(tarefa: Tarefa) {
     this.id.set(tarefa.id);
     this.service.atualizarStatusTarefa(tarefa);
+
+    if (tarefa.statusFinalizado == true) {
+      this.estadoBotao.set("checked");
+    } else {
+      this.estadoBotao.set("unchecked");
+    }
   }
 
   habilitarBotao(): string {
