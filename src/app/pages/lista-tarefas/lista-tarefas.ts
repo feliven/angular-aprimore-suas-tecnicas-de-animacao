@@ -70,13 +70,8 @@ export class ListaTarefas implements OnInit {
     this.tarefasSubscription.set(
       this.service.tarefas$.subscribe({
         next: (arrayTarefas) => {
-          console.log("this.listaTarefas - 1:", this.listaTarefas());
           this.listaTarefas.set(arrayTarefas);
-
-          console.log("this.listaTarefas - 2:", this.listaTarefas());
-
           this.tarefasFiltradas.set(this.listaTarefas());
-          console.log("this.tarefasFiltradas:", this.tarefasFiltradas());
         },
 
         complete: () => {
@@ -121,8 +116,6 @@ export class ListaTarefas implements OnInit {
       const novaTarefa = this.formulario.value;
       this.service.criar(novaTarefa);
 
-      console.log("nova tarefa criada:", novaTarefa);
-
       this.resetarFormulario();
     } else {
       console.error("Formulário INVÁLIDO");
@@ -133,8 +126,6 @@ export class ListaTarefas implements OnInit {
     if (this.formulario.valid) {
       const tarefaParaEditar = this.formulario.value;
       this.service.editar(tarefaParaEditar, true);
-
-      console.log("tarefa editada:", tarefaParaEditar);
 
       this.resetarFormulario();
       this.formAberto.set(false);

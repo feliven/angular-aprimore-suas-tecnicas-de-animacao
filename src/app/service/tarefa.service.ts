@@ -23,11 +23,7 @@ export class TarefaService {
     const listaAtualTarefas = signal(this.tarefasSubject.getValue());
 
     this.http.get<Tarefa[]>(this.API, { params }).subscribe((tarefas) => {
-      console.log("listaAtualTarefas():", listaAtualTarefas());
-
       listaAtualTarefas.set(listaAtualTarefas().concat(tarefas));
-
-      console.log("lista() atualizada:", listaAtualTarefas());
 
       this.tarefasSubject.next(listaAtualTarefas());
     });
@@ -54,7 +50,6 @@ export class TarefaService {
           listaTarefas[index] = tarefaAtualizada;
           this.tarefasSubject.next(listaTarefas);
         }
-        console.log("tarefaAtualizada:", tarefaAtualizada);
       }
     });
   }
@@ -64,18 +59,13 @@ export class TarefaService {
 
     this.http.delete<Tarefa>(url).subscribe(() => {
       const listaTarefas = this.tarefasSubject.getValue();
-      console.log("listaTarefas.length - antes:", listaTarefas.length);
 
       const index = listaTarefas.findIndex((tarefa) => tarefa.id === id);
-
-      // if (!tarefaRemovida) throw new Error("Tarefa removida não foi encontrada");
 
       if (index > -1) {
         listaTarefas.splice(index, 1);
         this.tarefasSubject.next(listaTarefas);
       }
-
-      console.log("listaTarefas.length - depois:", listaTarefas.length);
     });
   }
 
