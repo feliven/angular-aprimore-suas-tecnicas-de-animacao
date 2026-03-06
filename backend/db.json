@@ -97,25 +97,6 @@
       "statusFinalizado": false,
       "categoria": "Trabalho",
       "prioridade": "Alta"
-    },
-    {
-      "id": 26,
-      "descricao": [
-        [
-          "ergeryr"
-        ]
-      ],
-      "statusFinalizado": [
-        [
-          false
-        ]
-      ],
-      "categoria": [
-        [
-          "Casa"
-        ]
-      ],
-      "prioridade": "Alta"
     }
   ]
 }
