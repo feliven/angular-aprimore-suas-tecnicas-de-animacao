@@ -7,8 +7,6 @@ import { provideAnimations } from "@angular/platform-browser/animations";
 import { ListaTarefas } from "./app/pages/lista-tarefas/lista-tarefas";
 import { App } from "./app/app";
 
-// import { AppModule } from "./app/app.module";
-
 bootstrapApplication(App, {
   providers: [
     provideZonelessChangeDetection(),
@@ -20,21 +18,11 @@ bootstrapApplication(App, {
         path: "",
         redirectTo: "listaTarefas",
         pathMatch: "full",
-        data: {
-          reuseComponent: true,
-        },
       },
       {
         path: "listaTarefas",
         component: ListaTarefas,
-        data: {
-          reuseComponent: true,
-        },
       },
     ]),
   ],
 });
-
-// platformBrowser()
-//   .bootstrapModule(AppModule)
-//   .catch((err) => console.error(err));

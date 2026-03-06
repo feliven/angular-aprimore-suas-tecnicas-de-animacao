@@ -92,12 +92,12 @@
   <div class="tasks-area">
     @if (tarefasFiltradas().length > 0) {
     <div>
-      @for (tarefa of tarefasFiltradas(); track tarefa.id; let i = $index) {
+      @for (tarefa of tarefasFiltradas(); track tarefa.id) {
       <div
         @filterAnimation
         class="lista-tarefas card-{{ tarefa.categoria }}"
-        (mouseover)="indexTarefa = i"
-        [@highlightedState]="indexTarefa === i ? 'highlighted': 'default'"
+        (mouseover)="indexTarefa.set($index)"
+        [@highlightedState]="indexTarefa() === $index ? 'highlighted': 'default'"
       >
         <div class="info-card">
           <p class="categoria-tarefa categoria-{{ tarefa.categoria }}">
@@ -108,7 +108,7 @@
           <p class="status-tarefa">
             <button
               [ngClass]="(tarefa.statusFinalizado == true) ? 'icone-checked' : 'icone-unchecked'"
-              (click)="finalizarTarefa(tarefa.id);"
+              (click)="finalizarTarefa(tarefa);"
               [@checkButton]="(tarefa.id === id() ? 'checked' : 'unchecked')"
             ></button>
           </p>
@@ -124,7 +124,7 @@
             <button class="botao-editar" (click)="carregarParaEditar(tarefa.id)">
               <img src="icones/icone-editar.png" alt="Ícone de editar" />
             </button>
-            <button (click)="excluirTarefa(tarefa.id)" class="botao-deletar">
+            <button (click)="excluirTarefa(tarefa)" class="botao-deletar">
               <img src="icones/icone-excluir.png" alt="Ícone de excluir" />
             </button>
           </div>
