@@ -41,19 +41,21 @@ export class TarefaService {
     });
   }
 
-  editar(tarefaParaAtualizar: Tarefa): void {
+  editar(tarefaParaAtualizar: Tarefa, atualizarSubject: boolean): void {
     const url = `${this.API}/${tarefaParaAtualizar.id}`;
 
     this.http.put<Tarefa>(url, tarefaParaAtualizar).subscribe((tarefaAtualizada) => {
-      const listaTarefas = this.tarefasSubject.getValue();
-      const index = listaTarefas.findIndex((tarefa) => tarefa.id === tarefaAtualizada.id);
+      if (atualizarSubject) {
+        const listaTarefas = this.tarefasSubject.getValue();
+        const index = listaTarefas.findIndex((tarefa) => tarefa.id === tarefaAtualizada.id);
 
-      if (index > -1) {
-        // listaTarefas.splice(index, 1, tarefaAtualizada);
-        listaTarefas[index] = tarefaAtualizada;
-        this.tarefasSubject.next(listaTarefas);
+        if (index > -1) {
+          // listaTarefas.splice(index, 1, tarefaAtualizada);
+          listaTarefas[index] = tarefaAtualizada;
+          this.tarefasSubject.next(listaTarefas);
+        }
+        console.log("tarefaAtualizada:", tarefaAtualizada);
       }
-      console.log("tarefaAtualizada:", tarefaAtualizada);
     });
   }
 
@@ -84,6 +86,6 @@ export class TarefaService {
 
   atualizarStatusTarefa(tarefa: Tarefa): void {
     tarefa.statusFinalizado = !tarefa.statusFinalizado;
-    this.editar(tarefa);
+    this.editar(tarefa, false);
   }
 }
