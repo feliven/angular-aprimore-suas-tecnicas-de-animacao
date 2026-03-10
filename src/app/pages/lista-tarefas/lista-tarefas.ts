@@ -149,8 +149,9 @@ export class ListaTarefas implements OnInit {
     this.formAberto.set(false);
   }
 
-  triggerShakeAnimation(controlName: string): boolean {
-    return (this.formulario.get(controlName)?.touched && this.formulario.get(controlName)?.invalid) ?? false;
+  triggerShakeAnimation(controlName: string): string {
+    const deveAtivarAnimacao = this.formulario.get(controlName)?.touched && this.formulario.get(controlName)?.invalid;
+    return deveAtivarAnimacao ? "shakeTrigger" : "";
   }
 
   resetarFormulario() {

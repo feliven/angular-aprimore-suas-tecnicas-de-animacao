@@ -17,7 +17,7 @@
       formControlName="descricao"
       placeholder="Digite a tarefa"
       [ngClass]="campoValidado('descricao')"
-      [@shakeAnimation]="triggerShakeAnimation('descricao')"
+      [ngClass]="triggerShakeAnimation('descricao')"
     />
     @if (formulario.get('descricao')?.invalid && formulario.get('descricao')?.touched) {
     <app-mensagem mensagemValidacao="Preencha a descrição"> </app-mensagem>
@@ -28,7 +28,7 @@
       id="prioridade"
       formControlName="prioridade"
       [ngClass]="campoValidado('prioridade')"
-      [@shakeAnimation]="triggerShakeAnimation('prioridade')"
+      [ngClass]="triggerShakeAnimation('prioridade')"
     >
       <option value="">Selecione</option>
       <option value="Alta">Alta</option>
@@ -44,7 +44,7 @@
       id="categoria"
       formControlName="categoria"
       [ngClass]="campoValidado('categoria')"
-      [@shakeAnimation]="triggerShakeAnimation('categoria')"
+      [ngClass]="triggerShakeAnimation('categoria')"
     >
       <option value="">Selecione</option>
       <option value="Casa">Casa</option>
