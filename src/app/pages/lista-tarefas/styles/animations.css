@@ -1,12 +1,12 @@
 .shownStateEnter {
-  animation: fadeIn 300ms ease forwards;
+  animation: fadeInShownState 300ms ease forwards;
 }
 
 .shownStateLeave {
-  animation: fadeOut 120ms ease forwards;
+  animation: fadeOutShownState 120ms ease forwards;
 }
 
-@keyframes fadeIn {
+@keyframes fadeInShownState {
   from {
     opacity: 0;
   }
@@ -15,7 +15,7 @@
   }
 }
 
-@keyframes fadeOut {
+@keyframes fadeOutShownState {
   from {
     opacity: 1;
   }
@@ -26,15 +26,15 @@
 
 .filterTriggerEnter {
   transform-origin: left;
-  animation: filterEnter 700ms cubic-bezier(0.25, 1, 0.5, 1);
+  animation: fadeInFilter 700ms cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .filterTriggerLeave {
   transform-origin: left;
-  animation: filterLeave 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  animation: fadeOutFilter 500ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes filterEnter {
+@keyframes fadeInFilter {
   0% {
     opacity: 0;
     transform: scaleX(0);
@@ -51,7 +51,7 @@
   }
 }
 
-@keyframes filterLeave {
+@keyframes fadeOutFilter {
   0% {
     opacity: 1;
     transform: scaleX(1);
@@ -63,5 +63,31 @@
   100% {
     opacity: 0;
     transform: scaleX(0);
+  }
+}
+
+.noTasksEnter {
+  animation: slideInNoTasks 500ms;
+}
+
+.noTasksLeave {
+  animation: slideOutNoTasks 500ms;
+}
+
+@keyframes slideInNoTasks {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutNoTasks {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
   }
 }
