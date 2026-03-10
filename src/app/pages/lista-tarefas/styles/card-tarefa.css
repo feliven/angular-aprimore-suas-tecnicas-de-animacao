@@ -1,0 +1,134 @@
+.card-descricao {
+  grid-area: "card-descricao";
+  font-size: 21px;
+  font-weight: 600;
+  color: #263238;
+  line-height: 24px;
+  margin-left: 16px;
+  margin-right: 16px;
+  text-align: left;
+  word-break: break-word;
+  max-width: 70%;
+  margin-top: 0;
+}
+
+.status-tarefa {
+  grid-area: "status";
+  grid-column: span 3;
+  border-radius: 8px;
+  font-size: 16px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 40px;
+  font-family: "Prompt";
+  color: #263238;
+}
+
+.status-tarefa button {
+  cursor: pointer;
+  margin-top: 55px;
+  background-size: contain;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #6c757d;
+  transition:
+    transform 400ms ease-in,
+    border-color 200ms ease;
+  transform-origin: center;
+  will-change: transform;
+}
+
+.status-tarefa button:hover {
+  border-color: #84d39b;
+}
+
+.prioridade-tarefa {
+  grid-area: "prioridade";
+  margin-left: 8px;
+  margin-top: 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  font-family: "Prompt";
+  color: #263238;
+  padding-right: 8px;
+  padding-left: 8px;
+}
+
+.prioridade-Alta {
+  background: #f7a9a0;
+}
+
+.prioridade-Normal {
+  background: #ffd67f;
+}
+
+.prioridade-Baixa {
+  background: #abe5bc;
+}
+
+.categoria-tarefa {
+  grid-area: "categoria";
+  margin-left: 8px;
+  margin-top: 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  font-family: "Prompt";
+  color: #263238;
+  padding-right: 8px;
+  padding-left: 8px;
+}
+
+.categoria-tarefa img {
+  padding-right: 8px;
+}
+
+.categoria-Casa {
+  background: #b2b6ff;
+}
+
+.categoria-Estudos {
+  background: #d499ff;
+}
+
+.categoria-Trabalho {
+  background: #8ad4ff;
+}
+
+.botoes-card {
+  display: inline-flex;
+  margin-right: 12px;
+}
+
+.botoes-card button {
+  background-color: inherit;
+}
+
+.botao-editar,
+.botao-deletar {
+  padding: 0;
+  margin: 4px 0;
+}
+
+.botao-editar {
+  margin-right: 16px;
+}
+
+.icone-unchecked {
+  background: transparent;
+  transform: scale(1);
+}
+
+.icone-checked {
+  background-image: url("/icones/check-Feito.png");
+  border: none !important;
+  transform: scale(0.4);
+}
