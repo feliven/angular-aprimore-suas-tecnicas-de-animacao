@@ -2,7 +2,7 @@ import { provideCheckNoChangesConfig, provideZonelessChangeDetection } from "@an
 import { provideHttpClient } from "@angular/common/http";
 import { bootstrapApplication } from "@angular/platform-browser";
 import { provideRouter } from "@angular/router";
-import { provideAnimations } from "@angular/platform-browser/animations";
+import { provideAnimations, provideNoopAnimations } from "@angular/platform-browser/animations";
 
 import { ListaTarefas } from "./app/pages/lista-tarefas/lista-tarefas";
 import { App } from "./app/app";
@@ -11,6 +11,7 @@ bootstrapApplication(App, {
   providers: [
     provideZonelessChangeDetection(),
     provideAnimations(),
+    provideNoopAnimations(),
     provideHttpClient(),
     provideCheckNoChangesConfig({ exhaustive: true, interval: 1000 }),
     provideRouter([
