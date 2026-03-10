@@ -1,40 +1,17 @@
 import { ChangeDetectionStrategy, Component, OnInit, effect, inject, signal } from "@angular/core";
 import { NgClass } from "@angular/common";
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-// import { filter } from "rxjs";
+import { Subscription } from "rxjs";
 
 import { TarefaService } from "../../service/tarefa.service";
 import { Tarefa } from "../../interface/tarefa";
 import { Mensagem } from "../../components/mensagem/mensagem";
-import {
-  botaoCheckTrigger,
-  filterTrigger,
-  flyInOutTrigger,
-  formButtonTrigger,
-  highlightedStateTrigger,
-  listStateTrigger,
-  noTasksTrigger,
-  shakeTrigger,
-  shownStateTrigger,
-} from "../../animations";
-import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-lista-tarefas",
   templateUrl: "./lista-tarefas.html",
   styleUrls: ["./lista-tarefas.css"],
   imports: [NgClass, ReactiveFormsModule, Mensagem],
-  animations: [
-    highlightedStateTrigger,
-    shownStateTrigger,
-    botaoCheckTrigger,
-    filterTrigger,
-    formButtonTrigger,
-    noTasksTrigger,
-    flyInOutTrigger,
-    shakeTrigger,
-    listStateTrigger,
-  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListaTarefas implements OnInit {
