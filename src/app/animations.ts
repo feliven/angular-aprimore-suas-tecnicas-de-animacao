@@ -1,5 +1,4 @@
 import { animate, group, keyframes, query, stagger, state, style, transition, trigger } from "@angular/animations";
-import { transform } from "happy-dom/lib/PropertySymbol";
 
 export const highlightedStateTrigger = trigger("highlightedState", [
   state(
