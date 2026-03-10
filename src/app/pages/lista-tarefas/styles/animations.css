@@ -23,3 +23,45 @@
     opacity: 0;
   }
 }
+
+.filterTriggerEnter {
+  transform-origin: left;
+  animation: filterEnter 700ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.filterTriggerLeave {
+  transform-origin: left;
+  animation: filterLeave 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes filterEnter {
+  0% {
+    opacity: 0;
+    transform: scaleX(0);
+    background-color: yellow;
+  }
+  10% {
+    opacity: 0.5;
+    transform: scaleX(0.9);
+    background-color: red;
+  }
+  100% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes filterLeave {
+  0% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  10% {
+    opacity: 0.5;
+    transform: scaleX(0.9);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+}
