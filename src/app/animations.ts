@@ -1,4 +1,4 @@
-import { animate, group, keyframes, query, state, style, transition, trigger } from "@angular/animations";
+import { animate, group, keyframes, query, stagger, state, style, transition, trigger } from "@angular/animations";
 import { transform } from "happy-dom/lib/PropertySymbol";
 
 export const highlightedStateTrigger = trigger("highlightedState", [
@@ -159,13 +159,15 @@ export const listStateTrigger = trigger("listState", [
           opacity: 0,
           transform: "translateX(-100%)",
         }),
-        animate(
-          "500ms ease-out",
-          keyframes([
-            style({ offset: 0.4, opacity: 1, transform: "translateX(-15%)" }),
-            style({ offset: 1, opacity: 1, transform: "translateX(0)" }),
-          ]),
-        ),
+        stagger(200, [
+          animate(
+            "500ms ease-out",
+            keyframes([
+              style({ offset: 0.4, opacity: 1, transform: "translateX(-15%)" }),
+              style({ offset: 1, opacity: 1, transform: "translateX(0)" }),
+            ]),
+          ),
+        ]),
       ],
       { optional: true },
     ),
