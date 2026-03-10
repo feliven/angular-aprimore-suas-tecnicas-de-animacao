@@ -28,6 +28,7 @@ export const highlightedStateTrigger = trigger("highlightedState", [
   ]),
 ]);
 
+// MIGRADO
 export const shownStateTrigger = trigger("shownState", [
   //   state("notShown", style({})),
   // state("shown", style({})),
@@ -35,6 +36,7 @@ export const shownStateTrigger = trigger("shownState", [
   transition(":leave", [animate(120, style({ opacity: 0 }))]),
 ]);
 
+// MIGRADO
 export const botaoCheckTrigger = trigger("checkButton", [
   transition("* => checked", [
     animate("400ms ease-in"),
@@ -44,8 +46,7 @@ export const botaoCheckTrigger = trigger("checkButton", [
   ]),
 ]);
 
-// código omitido
-
+// MIGRADO
 export const filterTrigger = trigger("filterAnimation", [
   transition(":enter", [
     style({ opacity: 0, width: 0 }),
@@ -76,6 +77,7 @@ export const formButtonTrigger = trigger("formButton", [
   ]),
 ]);
 
+// MIGRADO
 export const shakeTrigger = trigger("shakeAnimation", [
   transition("false => true", [
     animate(
@@ -98,6 +100,7 @@ export const shakeTrigger = trigger("shakeAnimation", [
   ]),
 ]);
 
+// MIGRADO
 export const noTasksTrigger = trigger("noTasks", [
   transition(":enter", [
     animate(500, keyframes([style({ transform: "translateX(-100%)" }), style({ transform: "translateX(0)" })])),
@@ -107,6 +110,7 @@ export const noTasksTrigger = trigger("noTasks", [
   ]),
 ]);
 
+// não vou migrar
 export const flyInOutTrigger = trigger("flyInOut", [
   transition(":enter", [
     style({

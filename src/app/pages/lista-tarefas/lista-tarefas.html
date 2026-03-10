@@ -6,8 +6,9 @@
   <form
     class="formulario ff-prompt"
     [formGroup]="formulario"
-    @shownState
     [@formButton]="formulario.valid ? 'valid':'invalid'"
+    animate.enter="shownStateEnter"
+    animate.leave="shownStateLeave"
   >
     <label for="descricao">Descrição da tarefa</label>
     <input
@@ -94,7 +95,8 @@
     <div @listState>
       @for (tarefa of tarefasFiltradas(); track tarefa.id) {
       <div
-        @filterAnimation
+        animate.enter="filterTriggerEnter"
+        animate.leave="filterTriggerLeave"
         class="lista-tarefas card-{{ tarefa.categoria }}"
         (mouseover)="indexTarefa.set($index)"
         [@highlightedState]="indexTarefa() === $index ? 'highlighted': 'default'"
@@ -109,7 +111,6 @@
             <button
               [ngClass]="(tarefa.statusFinalizado == true) ? 'icone-checked' : 'icone-unchecked'"
               (click)="finalizarTarefa(tarefa);"
-              [@checkButton]="(tarefa.id === id() && estadoBotao())"
             ></button>
           </p>
         </div>
@@ -133,7 +134,7 @@
       }
     </div>
     } @else if (dadosForamCarregados()) {
-    <div class="no-tasks" @noTasks>
+    <div class="no-tasks" animate.enter="noTasksEnter" animate.leave="noTasksLeave">
       <p class="ng-template ff-prompt">Olá! Ainda não há tarefas por aqui! :)</p>
     </div>
     }
