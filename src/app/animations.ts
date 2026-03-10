@@ -63,6 +63,7 @@ export const filterTrigger = trigger("filterAnimation", [
   transition(":leave", [animate("500ms cubic-bezier(0.16, 1, 0.3, 1)", style({ opacity: 0, width: 0 }))]),
 ]);
 
+// MIGRADO
 export const formButtonTrigger = trigger("formButton", [
   transition("invalid => valid", [
     query(".botao-salvar", [

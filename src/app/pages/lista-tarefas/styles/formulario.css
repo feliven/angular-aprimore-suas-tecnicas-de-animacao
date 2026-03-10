@@ -66,13 +66,45 @@
   background: #63b77c;
 }
 
-.botao-cancelar {
-  background: #f89185;
+.botao-desabilitado {
+  background-color: #6c757d;
+  cursor: default;
 }
 
-.botao-desabilitado {
-  background: #6c757d;
-  cursor: default;
+.animacao-ativa-botao-salvar {
+  animation: form-valid 400ms ease;
+}
+
+.animacao-desativa-botao-salvar {
+  animation: form-invalid 350ms ease;
+}
+
+@keyframes form-valid {
+  0% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1.8);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes form-invalid {
+  0% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.botao-cancelar {
+  background: #f89185;
 }
 
 option:disabled {

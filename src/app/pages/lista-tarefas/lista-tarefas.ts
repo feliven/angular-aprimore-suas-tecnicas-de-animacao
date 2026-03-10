@@ -191,8 +191,15 @@ export class ListaTarefas implements OnInit {
   }
 
   habilitarBotao(): string {
+    const existemErrosNoFormulario =
+      (this.formulario.get("descricao")?.errors && this.formulario.get("descricao")?.touched) ||
+      (this.formulario.get("prioridade")?.errors && this.formulario.get("prioridade")?.touched) ||
+      (this.formulario.get("categoria")?.errors && this.formulario.get("categoria")?.touched);
+
     if (this.formulario.valid) {
-      return "botao-salvar";
+      return "botao-salvar animacao-ativa-botao-salvar";
+    } else if (existemErrosNoFormulario) {
+      return "botao-desabilitado animacao-desativa-botao-salvar";
     } else return "botao-desabilitado";
   }
 
