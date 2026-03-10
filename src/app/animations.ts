@@ -1,5 +1,6 @@
 import { animate, group, keyframes, query, stagger, state, style, transition, trigger } from "@angular/animations";
 
+// MIGRADO
 export const highlightedStateTrigger = trigger("highlightedState", [
   state(
     "default",
