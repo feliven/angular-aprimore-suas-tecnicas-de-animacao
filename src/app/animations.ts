@@ -149,3 +149,25 @@ export const flyInOutTrigger = trigger("flyInOut", [
     ]),
   ]),
 ]);
+
+export const listStateTrigger = trigger("listState", [
+  transition("*=>*", [
+    query(
+      ":enter",
+      [
+        style({
+          opacity: 0,
+          transform: "translateX(-100%)",
+        }),
+        animate(
+          "500ms ease-out",
+          keyframes([
+            style({ offset: 0.4, opacity: 1, transform: "translateX(-15%)" }),
+            style({ offset: 1, opacity: 1, transform: "translateX(0)" }),
+          ]),
+        ),
+      ],
+      { optional: true },
+    ),
+  ]),
+]);

@@ -12,6 +12,7 @@ import {
   flyInOutTrigger,
   formButtonTrigger,
   highlightedStateTrigger,
+  listStateTrigger,
   noTasksTrigger,
   shakeTrigger,
   shownStateTrigger,
@@ -32,6 +33,7 @@ import { Subscription } from "rxjs";
     noTasksTrigger,
     flyInOutTrigger,
     shakeTrigger,
+    listStateTrigger,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

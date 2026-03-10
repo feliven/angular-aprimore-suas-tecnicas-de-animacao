@@ -91,7 +91,7 @@
 
   <div class="tasks-area">
     @if (tarefasFiltradas().length > 0) {
-    <div>
+    <div @listState>
       @for (tarefa of tarefasFiltradas(); track tarefa.id) {
       <div
         @filterAnimation
