@@ -91,7 +91,7 @@
 
   <div class="tasks-area">
     @if (tarefasFiltradas().length > 0) {
-    <div @listState>
+    <div animate.enter="listStateEnter">
       @for (tarefa of tarefasFiltradas(); track tarefa.id) {
       <div
         animate.enter="filterTriggerEnter"
