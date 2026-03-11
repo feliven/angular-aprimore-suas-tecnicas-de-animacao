@@ -61,7 +61,7 @@
       <button
         (click)="salvarTarefa()"
         class="botao-form botao-salvar"
-        [ngClass]="habilitarBotao()"
+        [ngClass]="classesBotaoSalvar()"
         [disabled]="!formulario.valid"
       >
         Salvar

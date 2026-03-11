@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnInit, effect, inject, signal } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit, computed, effect, inject, signal } from "@angular/core";
+import { toSignal } from "@angular/core/rxjs-interop";
 import { NgClass } from "@angular/common";
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Subscription } from "rxjs";
@@ -34,6 +35,27 @@ export class ListaTarefas implements OnInit {
     statusFinalizado: [false, Validators.required],
     categoria: ["", Validators.required],
     prioridade: ["", Validators.required],
+  });
+
+  private formularioEventos = toSignal(this.formulario.events);
+
+  classesBotaoSalvar = computed(() => {
+    this.formularioEventos();
+
+    const existemErrosNoFormulario =
+      !!(this.formulario.get("descricao")?.errors && this.formulario.get("descricao")?.touched) ||
+      !!(this.formulario.get("prioridade")?.errors && this.formulario.get("prioridade")?.touched) ||
+      !!(this.formulario.get("categoria")?.errors && this.formulario.get("categoria")?.touched);
+
+    // using !! coerces values to a proper boolean
+
+    console.log("existemErrosNoFormulario:", existemErrosNoFormulario);
+
+    if (this.formulario.valid) {
+      return "botao-salvar animacao-ativa-botao-salvar";
+    } else if (existemErrosNoFormulario) {
+      return "botao-desabilitado animacao-desativa-botao-salvar";
+    } else return "botao-desabilitado";
   });
 
   campoBusca = new FormControl("", { nonNullable: true });
@@ -181,19 +203,6 @@ export class ListaTarefas implements OnInit {
     } else {
       this.estadoBotao.set("unchecked");
     }
-  }
-
-  habilitarBotao(): string {
-    const existemErrosNoFormulario =
-      (this.formulario.get("descricao")?.errors && this.formulario.get("descricao")?.touched) ||
-      (this.formulario.get("prioridade")?.errors && this.formulario.get("prioridade")?.touched) ||
-      (this.formulario.get("categoria")?.errors && this.formulario.get("categoria")?.touched);
-
-    if (this.formulario.valid) {
-      return "botao-salvar animacao-ativa-botao-salvar";
-    } else if (existemErrosNoFormulario) {
-      return "botao-desabilitado animacao-desativa-botao-salvar";
-    } else return "botao-desabilitado";
   }
 
   campoValidado(campoAtual: string): string {
