@@ -33,7 +33,7 @@
 /* using .lista-tarefas.filterTriggerLeave provides sufficient specificity to override .toHighlightedState */
 .lista-tarefas.filterTriggerLeave {
   transform-origin: left;
-  animation: fadeOutFilter 500ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fadeOutFilter 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes fadeInFilter {
@@ -56,15 +56,15 @@
 @keyframes fadeOutFilter {
   0% {
     opacity: 1;
-    transform: scaleX(1);
+    transform: scaleX(1) scaleY(1);
   }
   10% {
     opacity: 0.5;
-    transform: scaleX(0.9);
+    transform: scaleX(0.9) scaleY(0.9);
   }
   100% {
     opacity: 0;
-    transform: scaleX(0);
+    transform: scaleX(0) scaleY(0);
   }
 }
 
