@@ -135,38 +135,6 @@
   }
 }
 
-:host {
-  --borderDefaultState: 2px solid #b2b6ff;
-  --borderHighlightedState: 4px solid #b2b6ff;
-  --filterHighlightedState: brightness(104%);
-  --transformHighlightedState: scale(1.01);
-}
-
-.defaultState {
-  border: var(--borderDefaultState);
-}
-
-.highlightedState {
-  border: var(--borderHighlightedState);
-  filter: var(--filterHighlightedState);
-  transform: var(--transformHighlightedState);
-}
-
-.toHighlightedState {
-  animation: highlighting 250ms cubic-bezier(0.63, 0.14, 0.6, 1.35);
-}
-
-@keyframes highlighting {
-  from {
-    border: var(--borderDefaultState);
-  }
-  to {
-    border: var(--borderHighlightedState);
-    filter: var(--filterHighlightedState);
-    transform: var(--transformHighlightedState);
-  }
-}
-
 .listStateEnter {
   animation: slideInListState 600ms ease-out backwards;
   animation-delay: calc(var(--i) * 200ms);
