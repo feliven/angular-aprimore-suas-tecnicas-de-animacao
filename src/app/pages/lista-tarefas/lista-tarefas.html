@@ -111,9 +111,11 @@
           <p class="prioridade-tarefa prioridade-{{ tarefa.prioridade }}">{{ tarefa.prioridade }}</p>
           <p class="status-tarefa">
             <button
-              [ngClass]="(tarefa.statusFinalizado == true) ? 'icone-checked' : 'icone-unchecked'"
+              [ngClass]="(tarefa.statusFinalizado == true) ? 'btn-checked' : 'btn-unchecked'"
               (click)="finalizarTarefa(tarefa);"
-            ></button>
+            >
+              <span class="animacao-alvo"></span>
+            </button>
           </p>
         </div>
         <div class="conteudo">
