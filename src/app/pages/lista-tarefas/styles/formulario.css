@@ -106,7 +106,3 @@
 .botao-cancelar {
   background: #f89185;
 }
-
-option:disabled {
-  color: #6c757d;
-}

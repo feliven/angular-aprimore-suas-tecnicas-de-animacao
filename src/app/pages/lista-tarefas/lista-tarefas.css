@@ -1,15 +1,8 @@
 @import "./styles/animations.css";
 @import "./styles/formulario.css";
 @import "./styles/busca.css";
-@import "./styles/listagem-tarefas.css";
+@import "./styles/corpo-lista-tarefas.css";
 @import "./styles/card-tarefa.css";
-
-/* Container for the task-list area so the no-tasks message can overlay without affecting flow */
-.tasks-area {
-  position: relative;
-  min-height: 200px;
-  overflow: hidden;
-}
 
 .no-tasks {
   position: absolute;
@@ -20,7 +13,6 @@
   justify-content: center;
   align-items: center;
   padding: 24px 0;
-  will-change: transform;
 }
 
 h2 {
@@ -61,13 +53,6 @@ button {
   line-height: 24px;
 }
 
-.ilustracao {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
 input {
   font-weight: 400;
 }
@@ -81,22 +66,8 @@ input:focus {
   outline: 0;
 }
 
-.conteudo {
-  display: flex;
-  justify-content: space-between;
-  align-items: last baseline;
-  margin-top: 24px;
-  margin-bottom: 12px;
-}
-
-.info-card {
-  display: grid;
-  grid-template-columns: min-content min-content repeat(3, 1fr);
-  grid-template-areas:
-    "categoria prioridade status"
-    "descricao";
-  margin-left: 8px;
-  box-sizing: border-box;
+option:disabled {
+  color: #6c757d;
 }
 
 .ng-template {

@@ -1,3 +1,16 @@
+.ilustracao {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.tasks-area {
+  position: relative;
+  min-height: 200px;
+  overflow: hidden;
+}
+
 .lista-tarefas {
   display: flex;
   flex-direction: column;
@@ -7,7 +20,6 @@
   margin-right: 25%;
   margin-left: 25%;
   border-radius: 8px;
-  will-change: transform;
 }
 
 .card-Estudos {
@@ -26,13 +38,13 @@
   text-decoration: line-through;
 }
 
-.listagem-tarefas {
+.corpo-lista-tarefas {
   min-height: 80vh;
   position: relative;
   overflow-x: hidden;
 }
 
-.listagem-tarefas h2 {
+.corpo-lista-tarefas h2 {
   font-size: 32px;
   font-family: "Prompt";
   font-weight: 400;

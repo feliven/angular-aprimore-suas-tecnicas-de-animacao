@@ -1,3 +1,21 @@
+.info-card {
+  display: grid;
+  grid-template-columns: min-content min-content repeat(3, 1fr);
+  grid-template-areas:
+    "categoria prioridade status"
+    "descricao";
+  margin-left: 8px;
+  box-sizing: border-box;
+}
+
+.conteudo {
+  display: flex;
+  justify-content: space-between;
+  align-items: last baseline;
+  margin-top: 24px;
+  margin-bottom: 12px;
+}
+
 .card-descricao {
   grid-area: "card-descricao";
   font-size: 21px;
