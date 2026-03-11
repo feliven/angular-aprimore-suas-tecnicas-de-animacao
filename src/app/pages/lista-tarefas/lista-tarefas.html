@@ -93,9 +93,8 @@
   }
 
   <div class="tasks-area">
-    @if (tarefasFiltradas().length > 0) {
-    <div animate.enter="listStateEnter">
-      @for (tarefa of tarefasFiltradas(); track tarefa.id) {
+    @if (tarefasFiltradas().length > 0) { @for (tarefa of tarefasFiltradas(); track tarefa.id) {
+    <div [animate.enter]="ativaAnimacaoLista() || null" [style.--i]="$index">
       <div
         animate.enter="filterTriggerEnter"
         animate.leave="filterTriggerLeave"
@@ -135,9 +134,8 @@
           </div>
         </div>
       </div>
-      }
     </div>
-    } @else if (dadosForamCarregados()) {
+    } } @else if (dadosForamCarregados()) {
     <div class="no-tasks" animate.enter="noTasksEnter" animate.leave="noTasksLeave">
       <p class="ng-template ff-prompt">Olá! Ainda não há tarefas por aqui! :)</p>
     </div>

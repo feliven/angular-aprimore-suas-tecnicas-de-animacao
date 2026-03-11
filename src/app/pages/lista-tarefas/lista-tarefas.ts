@@ -26,6 +26,7 @@ export class ListaTarefas implements OnInit {
   id = signal<number>(0);
   tarefasSubscription = signal<Subscription>(new Subscription());
   estadoBotao = signal<string>("unchecked");
+  ativaAnimacaoLista = signal<string>("listStateEnter");
 
   formulario: FormGroup = this.formBuilder.group({
     id: [0],
@@ -74,6 +75,8 @@ export class ListaTarefas implements OnInit {
   }
 
   filtrarTarefas() {
+    this.ativaAnimacaoLista.set("");
+
     const filtro: string = this.campoBusca.value;
 
     const filtroTratado = filtro.trim().toLowerCase();
