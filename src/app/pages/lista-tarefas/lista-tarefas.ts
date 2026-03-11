@@ -22,7 +22,7 @@ export class ListaTarefas implements OnInit {
   tarefasFiltradas = signal<Tarefa[]>([]);
   dadosForamCarregados = signal<boolean>(false);
   formAberto = signal<boolean>(false);
-  indexTarefa = signal<number>(-1);
+  idTarefa = signal<number>(-1);
   id = signal<number>(0);
   tarefasSubscription = signal<Subscription>(new Subscription());
   estadoBotao = signal<string>("unchecked");
@@ -39,7 +39,7 @@ export class ListaTarefas implements OnInit {
 
   constructor() {
     effect(() => {
-      console.log("indexTarefa():", this.indexTarefa());
+      console.log("idTarefa:", this.idTarefa());
     });
   }
 
@@ -58,6 +58,19 @@ export class ListaTarefas implements OnInit {
         },
       }),
     );
+
+    // this.campoBusca.valueChanges.subscribe((filtro) => {
+    //   const filtroTratado = filtro.trim().toLowerCase();
+
+    //   if (filtroTratado) {
+    //     const tarefasComFiltro = this.listaTarefas().filter((tarefa) => {
+    //       return tarefa.descricao.toLowerCase().includes(filtroTratado);
+    //     });
+    //     this.tarefasFiltradas.set(tarefasComFiltro);
+    //   } else {
+    //     this.tarefasFiltradas.set(this.listaTarefas());
+    //   }
+    // });
   }
 
   filtrarTarefas() {
