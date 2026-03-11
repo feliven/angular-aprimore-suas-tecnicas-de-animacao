@@ -6,8 +6,8 @@
   <form
     class="formulario ff-prompt"
     [formGroup]="formulario"
-    animate.enter="shownStateEnter"
-    animate.leave="shownStateLeave"
+    animate.enter="formTriggerEnter"
+    animate.leave="formTriggerLeave"
   >
     <label for="descricao">Descrição da tarefa</label>
     <input

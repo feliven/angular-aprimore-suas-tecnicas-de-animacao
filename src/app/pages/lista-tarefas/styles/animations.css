@@ -1,12 +1,12 @@
-.shownStateEnter {
-  animation: fadeInShownState 300ms ease forwards;
+.formTriggerEnter {
+  animation: fadeInForm 600ms ease forwards;
 }
 
-.shownStateLeave {
-  animation: fadeOutShownState 120ms ease forwards;
+.formTriggerLeave {
+  animation: fadeOutForm 120ms ease forwards;
 }
 
-@keyframes fadeInShownState {
+@keyframes fadeInForm {
   from {
     opacity: 0;
   }
@@ -15,7 +15,7 @@
   }
 }
 
-@keyframes fadeOutShownState {
+@keyframes fadeOutForm {
   from {
     opacity: 1;
   }
