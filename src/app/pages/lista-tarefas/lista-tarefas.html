@@ -101,7 +101,7 @@
         animate.leave="filterTriggerLeave"
         class="lista-tarefas card-{{ tarefa.categoria }}"
         (mouseover)="indexTarefa.set($index)"
-        [ngClass]="indexTarefa() === $index ? 'toHighlightedState highlightedState': ''"
+        [ngClass]="indexTarefa() === $index ? 'toHighlightedState highlightedState': 'defaultState'"
       >
         <div class="info-card">
           <p class="categoria-tarefa categoria-{{ tarefa.categoria }}">

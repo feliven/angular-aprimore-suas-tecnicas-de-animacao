@@ -140,6 +140,10 @@
   --transformHighlightedState: scale(1.01);
 }
 
+.defaultState {
+  border: var(--borderDefaultState);
+}
+
 .highlightedState {
   border: var(--borderHighlightedState);
   filter: var(--filterHighlightedState);
@@ -148,10 +152,6 @@
 
 .toHighlightedState {
   animation: highlighting 250ms cubic-bezier(0.63, 0.14, 0.6, 1.35);
-
-  @starting-style {
-    border: var(--borderDefaultState);
-  }
 }
 
 @keyframes highlighting {
